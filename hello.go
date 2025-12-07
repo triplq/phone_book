@@ -25,7 +25,7 @@ func AddContact(person Person, number string) *Contact {
 func FindContact(contacts []Contact, name string) (int, *Contact) {
 	for i, val := range contacts {
 		if val.Name == name {
-			return i, &val
+			return i, &contacts[i]
 		}
 	}
 	return -1, nil
@@ -33,10 +33,10 @@ func FindContact(contacts []Contact, name string) (int, *Contact) {
 
 func DeleteContact(contacts []Contact, name string) []Contact {
 	ind, _ := FindContact(contacts, name)
-	new_cont := make([]Contact, 0, len(contacts)-1)
-	new_cont = append(new_cont, contacts[:ind]...)
-	new_cont = append(new_cont, contacts[ind+1:]...)
-	return new_cont
+	if ind == -1 {
+		return nil
+	}
+	return append(contacts[:ind], contacts[ind+1:]...)
 }
 
 func PrintAll(contacts []Contact) {
